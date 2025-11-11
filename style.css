@@ -19,6 +19,7 @@ body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     color: var(--dark-gray);
+    background: var(--white);
 }
 
 /* Navigation */
@@ -78,11 +79,10 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-                url('photos/marc-kleen-GS2k9FW3drg-unsplash.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 600px;
+    /* unified page background — no image */
+    background: transparent;
+    color: var(--white);
+    height: 560px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -92,19 +92,21 @@ body {
 }
 
 .hero-content {
-    color: var(--white);
-    max-width: 800px;
+    color: var(--dark-gray);
+    max-width: 900px;
 }
 
 .hero-content h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-weight: 700;
+    color: var(--navy);
 }
 
 .hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    font-size: 1.15rem;
+    margin-bottom: 1.6rem;
+    color: rgba(51,51,51,0.9);
 }
 
 .cta-button {
@@ -125,7 +127,7 @@ body {
 /* Services Section */
 .services {
     padding: 4rem 2rem;
-    background-color: var(--light-gray);
+    background-color: transparent;
 }
 
 .services h2 {
@@ -149,6 +151,7 @@ body {
     text-align: center;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
+    color: var(--dark-gray);
 }
 
 .service-card:hover {
@@ -185,8 +188,8 @@ body {
 /* Quick Links Section */
 .quick-links {
     padding: 4rem 2rem;
-    background-color: var(--navy);
-    color: var(--white);
+    background-color: transparent;
+    color: var(--dark-gray);
 }
 
 .quick-links h2 {
@@ -218,8 +221,8 @@ body {
 
 /* Footer */
 footer {
-    background-color: var(--dark-gray);
-    color: var(--white);
+    background-color: transparent;
+    color: var(--dark-gray);
     padding: 4rem 2rem 2rem;
 }
 
@@ -237,14 +240,14 @@ footer {
 }
 
 .footer-section a {
-    color: var(--white);
+    color: var(--navy);
     text-decoration: none;
     display: block;
     margin-bottom: 0.5rem;
 }
 
 .footer-section a:hover {
-    color: var(--gold);
+    color: var(--primary-red);
 }
 
 .footer-bottom {
