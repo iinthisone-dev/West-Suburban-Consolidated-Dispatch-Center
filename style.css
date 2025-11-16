@@ -4,9 +4,9 @@
     --dark-red: #8B0000;
     --gold: #FFD700;
     --navy: #1C2841;
-    --light-gray: #f4f4f4;
+    --light-gray: #6f6d6d;
     --dark-gray: #333;
-    --white: #ffffff;
+    --white: #fefdfd;
 }
 
 * {
@@ -366,17 +366,23 @@ body {
 }
 
 .quick-link {
-    background: rgba(255,255,255,0.1);
+    background: var(--white);
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 10px;
     text-decoration: none;
-    color: var(--white);
+    color: var(--navy);
     text-align: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid var(--primary-red);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-weight: 600;
+    font-size: 1.05rem;
 }
 
 .quick-link:hover {
-    background: rgba(255,255,255,0.2);
+    background: var(--light-gray);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(196,30,58,0.2);
 }
 
 /* Footer */
