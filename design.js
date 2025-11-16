@@ -1,9 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Set the active nav link based on current page URL
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        // Remove any trailing slashes and match filename
+        if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+
     const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+    const navLinksContainer = document.querySelector('.nav-links');
 
     hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
+        navLinksContainer.classList.toggle('active');
         
         // Animate hamburger to X
         const spans = hamburger.querySelectorAll('span');
@@ -12,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-            navLinks.classList.remove('active');
+        if (!hamburger.contains(e.target) && !navLinksContainer.contains(e.target)) {
+            navLinksContainer.classList.remove('active');
             const spans = hamburger.querySelectorAll('span');
             spans.forEach(span => span.classList.remove('active'));
         }
