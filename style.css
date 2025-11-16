@@ -690,3 +690,244 @@ footer {
 .info-box a:hover {
     text-decoration: underline;
 }
+
+/* Careers Page Styling */
+.careers-section {
+    padding: 4rem 2rem;
+    background-color: transparent;
+}
+
+.careers-section > h2 {
+    text-align: center;
+    color: var(--navy);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.intro-text {
+    text-align: center;
+    color: var(--dark-gray);
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.opportunities-container {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+}
+
+.opportunity-box {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    overflow: hidden;
+    border-left: 4px solid var(--primary-red);
+}
+
+.opportunity-header {
+    background: linear-gradient(135deg, rgba(196,30,58,0.1), rgba(28,40,65,0.05));
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(196,30,58,0.2);
+}
+
+.opportunity-header h3 {
+    color: var(--navy);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.4rem;
+}
+
+.opportunity-header i {
+    color: var(--primary-red);
+    font-size: 1.8rem;
+}
+
+.opportunity-content {
+    padding: 2rem;
+    color: var(--dark-gray);
+}
+
+.opportunity-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.opportunity-content strong {
+    color: var(--navy);
+}
+
+.opportunity-content ul {
+    margin: 1rem 0 1.5rem 2rem;
+    line-height: 1.8;
+}
+
+.opportunity-content li {
+    margin-bottom: 0.5rem;
+}
+
+.doc-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    background-color: var(--primary-red);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.doc-link:hover {
+    background-color: var(--dark-red);
+}
+
+.doc-link i {
+    margin-right: 0.5rem;
+}
+
+.application-section {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+}
+
+.application-section h3 {
+    color: var(--navy);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.application-section > p {
+    color: var(--dark-gray);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+.document-box {
+    background: linear-gradient(135deg, rgba(196,30,58,0.05), rgba(28,40,65,0.03));
+    padding: 2rem;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-red);
+}
+
+.document-box h4 {
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.2rem;
+}
+
+.document-box i {
+    color: var(--primary-red);
+}
+
+.document-list {
+    list-style: none;
+    padding: 0;
+}
+
+.document-list li {
+    margin-bottom: 1rem;
+}
+
+.document-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--primary-red);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.document-list a:hover {
+    color: var(--dark-red);
+    text-decoration: underline;
+}
+
+.document-list i {
+    font-size: 1.1rem;
+}
+
+.why-join-section {
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+}
+
+.why-join-section h3 {
+    text-align: center;
+    color: var(--navy);
+    margin-bottom: 3rem;
+    font-size: 1.8rem;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.benefit-box {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-top: 4px solid var(--primary-red);
+    transition: all 0.3s ease;
+}
+
+.benefit-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(196,30,58,0.2);
+}
+
+.benefit-icon {
+    margin-bottom: 1rem;
+}
+
+.benefit-icon i {
+    font-size: 2.5rem;
+    color: var(--primary-red);
+}
+
+.benefit-box h4 {
+    color: var(--navy);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.benefit-box p {
+    color: var(--dark-gray);
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .careers-section {
+        padding: 2rem 1rem;
+    }
+
+    .careers-section > h2 {
+        font-size: 1.6rem;
+    }
+
+    .opportunity-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .opportunity-content {
+        padding: 1.5rem;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
