@@ -459,3 +459,51 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* FOIA Page Styling */
+.foia-content {
+    padding: 4rem 2rem;
+    background-color: transparent;
+}
+
+.foia-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    color: var(--dark-gray);
+}
+
+.foia-container h2 {
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.foia-container h3 {
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.foia-container p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    color: var(--dark-gray);
+}
+
+.foia-form-section {
+    background: var(--light-gray);
+    padding: 2rem;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-red);
+    margin: 2rem 0;
+}
+
+.form-download {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.form-download .cta-button {
+    display: inline-block;
+    margin: 0 auto;
+}
