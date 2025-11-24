@@ -58,30 +58,95 @@
                         <a href="https://www.wscdc.org/sites/default/files/WSCDC%20Full%20Time%20Telecommunicator%20Posting%202022_0.pdf" target="_blank" class="doc-link">
                             <i class="fas fa-file-pdf"></i> Full-Time Telecommunicator Posting
                         </a>
+                        <button class="cta-button apply-now-btn" onclick="openApplicationModal()">
+                            <i class="fas fa-paper-plane"></i> Apply Now
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="application-section">
-                <h3>How to Apply</h3>
-                <p>To apply for any position with WSCDC, please complete the application form below and submit it according to the instructions in the position announcement.</p>
-                
-                <div class="document-box">
-                    <h4><i class="fas fa-file-download"></i> Application Materials</h4>
-                    <ul class="document-list">
-                        <li>
-                            <a href="https://www.wscdc.org/sites/default/files/Application.pdf" target="_blank">
-                                <i class="fas fa-file-pdf"></i> WSCDC Application Form
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.wscdc.org/sites/default/files/WSCDC%20Full%20Time%20Telecommunicator%20Posting%202022_0.pdf" target="_blank">
-                                <i class="fas fa-file-pdf"></i> Full Time Telecommunicator Posting
-                            </a>
-                        </li>
-                    </ul>
+            <!-- Application Modal -->
+            <div id="applicationModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeApplicationModal()">&times;</span>
+                    <h2><i class="fas fa-clipboard-list"></i> Job Application</h2>
+                    <p>Please fill out the form below to apply for the 9-1-1 Telecommunicator position.</p>
+                    
+                    <form id="applicationForm" class="application-form">
+                        <div class="form-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Street Address</label>
+                            <input type="text" id="address" name="address">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" name="city">
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" name="state" value="IL">
+                            </div>
+                            <div class="form-group">
+                                <label for="zip">ZIP Code</label>
+                                <input type="text" id="zip" name="zip">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="resume">Upload Resume *</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required onchange="updateFileName('resume')">
+                                <label for="resume" class="file-upload-label">
+                                    <i class="fas fa-upload"></i> Choose File
+                                </label>
+                                <span id="resume-filename" class="file-name">No file chosen</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="coverLetter">Upload Cover Letter (Optional)</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="coverLetter" name="coverLetter" accept=".pdf,.doc,.docx" onchange="updateFileName('coverLetter')">
+                                <label for="coverLetter" class="file-upload-label">
+                                    <i class="fas fa-upload"></i> Choose File
+                                </label>
+                                <span id="coverLetter-filename" class="file-name">No file chosen</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Additional Information</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell us why you'd be a great fit for this position..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="closeApplicationModal()">Cancel</button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-paper-plane"></i> Submit Application
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
+
+            
 
             <div class="why-join-section">
                 <h3>Why Join WSCDC?</h3>
@@ -164,5 +229,52 @@
     </footer>
 
     <script src="design.js"></script>
+    <script>
+        // Modal functions
+        function openApplicationModal() {
+            document.getElementById('applicationModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeApplicationModal() {
+            document.getElementById('applicationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('applicationForm').reset();
+            document.getElementById('resume-filename').textContent = 'No file chosen';
+            document.getElementById('coverLetter-filename').textContent = 'No file chosen';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('applicationModal');
+            if (event.target === modal) {
+                closeApplicationModal();
+            }
+        }
+
+        // Update file name display
+        function updateFileName(inputId) {
+            const input = document.getElementById(inputId);
+            const filenameSpan = document.getElementById(inputId + '-filename');
+            
+            if (input.files && input.files.length > 0) {
+                filenameSpan.textContent = input.files[0].name;
+                filenameSpan.style.color = 'var(--navy)';
+            } else {
+                filenameSpan.textContent = 'No file chosen';
+                filenameSpan.style.color = '#999';
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would normally send the form data to a server
+            // For now, we'll just show a success message
+            alert('Thank you for your application! We will review your submission and contact you soon.');
+            closeApplicationModal();
+        });
+    </script>
 </body>
 </html>
