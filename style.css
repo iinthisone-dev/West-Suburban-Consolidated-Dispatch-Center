@@ -931,3 +931,123 @@ footer {
     }
 }
 
+/* Communities Page Styling */
+.communities-section {
+    padding: 4rem 2rem;
+    background-color: transparent;
+}
+
+.communities-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.communities-container h2 {
+    text-align: center;
+    color: var(--navy);
+    margin-bottom: 3rem;
+    font-size: 2rem;
+}
+
+.communities-container h3 {
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+}
+
+.communities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.community-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid var(--light-gray);
+}
+
+.community-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(196,30,58,0.15);
+}
+
+.community-logo {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.community-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.community-card h3 {
+    color: var(--navy);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.community-card p {
+    color: var(--dark-gray);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.community-card .cta-button {
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.community-card .cta-button i {
+    margin-left: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.communities-info {
+    background: var(--light-gray);
+    padding: 2.5rem;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-red);
+    margin-top: 2rem;
+}
+
+.communities-info h3 {
+    color: var(--navy);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.communities-info p {
+    color: var(--dark-gray);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .communities-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .community-logo {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .communities-info {
+        padding: 1.5rem;
+    }
+}
+
