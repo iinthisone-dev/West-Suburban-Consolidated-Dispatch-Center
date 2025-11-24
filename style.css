@@ -1059,8 +1059,8 @@ footer {
 .file-upload-label {
     display: inline-block;
     padding: 0.8rem 1.5rem;
-    background-color: var(--navy);
-    color: var(--white);
+    background-color: var(--white);
+    color: #ffffff;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
