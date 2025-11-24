@@ -21,6 +21,14 @@
             <a href="links.html">Links</a>
             <a href="contact.html">Contact</a>
         </div>
+        <div class="nav-auth">
+            <button onclick="openModal('signinModal')" class="auth-btn signin-btn">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+            <button onclick="openModal('signupModal')" class="auth-btn signup-btn">
+                <i class="fas fa-user-plus"></i> Sign Up
+            </button>
+        </div>
         <div class="hamburger">
             <span></span>
             <span></span>
@@ -64,58 +72,9 @@
             </div>
         </section>
 
-
-
-        <section class="info-section">
-            <div class="info-box">
-                <h2>Mission Statement</h2>
-                <p>To provide professional and compassionate 9-1-1 dispatch services in a fiscally responsible manner to the residents, visitors, and businesses of the communities served by the West Suburban Consolidated Dispatch Center.</p>
-            </div>
-
-            <div class="info-box">
-                <h2>WSCDC History</h2>
-                <p>The West Suburban Consolidated Dispatch Center (WSCDC) was formed in May of 2002 when the Oak Park and River Forest 9-1-1 dispatch centers merged. In 2004, the Village of Elmwood Park joined the center. In November of 2014, WSCDC began answering calls for service and dispatching the Park Ridge Police Department. In May of 2017 WSCDC began answering calls for service and dispatching for the Forest Park Police and Fire Department.</p>
-            </div>
-
-            <div class="info-box">
-                <h2>Governance</h2>
-                <p>WSCDC is compliant with Part 725 of Title 83 of the Illinois Administrative Code and is authorized to operate a 9-1-1 Emergency Telephone Number System and promote the awareness of the system to all potential users. <a href="https://www.wscdc.org/node/26">Read more</a></p>
-            </div>
-        </section>
-
-         <section class="communities-section">
-            <div class="communities-container">
-                <h2>Communities We Serve</h2>
-                <div class="communities-grid">
-                    <div class="community-card">
-                        <div class="community-logo">
-                            <img src="photos/forestpark.png" alt="Village of Forest Park Logo">
-                        </div>
-                        <h3>Village of Forest Park</h3>
-                        <p>WSCDC provides comprehensive 9-1-1 dispatch services for police, fire, and EMS for the Village of Forest Park.</p>
-                        <a href="http://www.forestpark.net/" target="_blank" class="cta-button">Visit Website <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-
-                    <div class="community-card">
-                        <div class="community-logo">
-                            <img src="photos/oakpark.png" alt="Village of Oak Park Logo">
-                        </div>
-                        <h3>Village of Oak Park</h3>
-                        <p>WSCDC serves as the primary dispatch center for police, fire, and EMS services for the Village of Oak Park.</p>
-                        <a href="http://www.oak-park.us/" target="_blank" class="cta-button">Visit Website <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-
-                    <div class="community-card">
-                        <div class="community-logo">
-                            <img src="photos/riverforest.png" alt="Village of River Forest Logo">
-                        </div>
-                        <h3>Village of River Forest</h3>
-                        <p>WSCDC provides 24/7 emergency dispatch services for police, fire, and EMS for the Village of River Forest.</p>
-                        <a href="http://www.vrf.us/" target="_blank" class="cta-button">Visit Website <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                
+        <section class="about">
+            <h2>About WSDC</h2>
+            <p>The West Suburban Consolidated Dispatch Center is dedicated to providing exceptional emergency dispatch services to our community. Our trained professionals work tirelessly to ensure rapid response times and efficient emergency coordination.</p>
         </section>
 
         <section class="quick-links">
@@ -146,14 +105,14 @@
             <div class="footer-section">
                 <h3>Contact Us</h3>
                 <p>Emergency: 911</p>
-                <p>Non-Emergency: (708) 771-9110
-</p>
-                
+                <p>Non-Emergency: [Phone Number]</p>
+                <p>Email: info@wsdc.org</p>
             </div>
             <div class="footer-section">
                 <h3>Location</h3>
-                <p>400 Park Avenue</p>
-                <p>River Forest, IL 60305</p>
+                <p>West Suburban Consolidated Dispatch Center</p>
+                <p>[Street Address]</p>
+                <p>[City, State ZIP]</p>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
@@ -167,39 +126,41 @@
         </div>
     </footer>
 
-    <script src="design.js"></script>
-</body>
-</html>
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signinModal')">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signinForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signin-email">Email</label>
+                    <input type="email" id="signin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
 
-<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Create Account</h2>
+            <form id="signupForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+        </div>
+    </div>
 
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
-
-    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-storage.js"></script>
-
-    <!-- Add Firebase products that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
-
-    <script>
-      // TODO
-      // Copy **only** your firebaseConfig from Google Firebae and add it below
-
-      // Your web app's Firebase configuration
-
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      // define authentication variable
-      let auth = firebase.auth();
-      let db = firebase.firestore();
-
-      // define a storage reference
-      let ref = firebase.storage().ref();
-    </script>
-    <!-- make sure to add your own js file as the last line in index.html file -->
-    <script src="app.js"></script>
-  </body>
-</html>
