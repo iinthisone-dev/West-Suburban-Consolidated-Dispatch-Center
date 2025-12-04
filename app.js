@@ -1,4 +1,4 @@
-console.log(firebase)
+console.log("WSCDC App loaded");
 
 document.addEventListener('DOMContentLoaded', () => {
     // ========================================
@@ -194,15 +194,3 @@ window.logout = function() {
         console.error("Sign out error:", error);
     });
 }
-
-
-//Connecting to backend DB
-
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "PROJECT_ID.firebaseapp.com",
-  projectId: "PROJECT_ID",
-  storageBucket: "PROJECT_ID.appspot.com",
-  messagingSenderId: "SENDER_ID",
-  appId: "YOUR_APP_ID"
-};

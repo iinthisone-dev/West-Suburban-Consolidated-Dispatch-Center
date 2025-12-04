@@ -164,3 +164,29 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    
+    <!-- Initialize Firebase -->
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzXZtNX_EsLxaNWQPc8o7rDoUg1Dpz5m4",
+            authDomain: "wscdc-66d0e.firebaseapp.com",
+            projectId: "wscdc-66d0e",
+            storageBucket: "wscdc-66d0e.firebasestorage.app",
+            messagingSenderId: "701584946154",
+            appId: "1:701584946154:web:b11a9f7fe9009e2813f893",
+            measurementId: "G-1CSTJ0PH10"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        window.auth = firebase.auth();
+    </script>
+
+    <script src="app.js"></script>
+
+</body>
+</html>

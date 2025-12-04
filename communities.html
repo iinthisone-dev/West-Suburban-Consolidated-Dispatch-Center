@@ -123,6 +123,63 @@
         </div>
     </footer>
 
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signinModal')">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signinForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signin-email">Email</label>
+                    <input type="email" id="signin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Create Account</h2>
+            <form id="signupForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    
+    <!-- Initialize Firebase -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzXZtNX_EsLxaNWQPc8o7rDoUg1Dpz5m4",
+            authDomain: "wscdc-66d0e.firebaseapp.com",
+            projectId: "wscdc-66d0e",
+            storageBucket: "wscdc-66d0e.firebasestorage.app",
+            messagingSenderId: "701584946154",
+            appId: "1:701584946154:web:b11a9f7fe9009e2813f893",
+            measurementId: "G-1CSTJ0PH10"
+        };
+        firebase.initializeApp(firebaseConfig);
+        window.auth = firebase.auth();
+    </script>
+
     <script src="app.js"></script>
 </body>
 </html>
