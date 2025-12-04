@@ -7,6 +7,31 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-controls {
+            display: inline-block;
+            margin-left: 1rem;
+        }
+        .admin-controls button {
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .edit-btn {
+            background: #ffc107;
+            color: #000;
+        }
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+        .faq-item {
+            position: relative;
+        }
+    </style>
 </head>
 <body>
     <nav class="main-nav">
@@ -46,34 +71,19 @@
     <main>
         <section class="faq-section">
             <div class="container">
-                <h2>Questions & Answers</h2>
-
-                <div class="faq-item">
-                    <h3>Why does the 9-1-1 Telecommunicator ask so many questions? Isn’t this delaying help being sent to me?</h3>
-                    <p>The Telecommunicator is trained to ask questions for police, fire, and medical calls. They ask to provide as much information as possible to responders for their and your safety, and so responders can efficiently help when they arrive. Telecommunicators can also give potentially life-saving instructions over the phone before responders arrive. Asking questions does not delay help — the Computer-Aided-Dispatch (CAD) system allows dispatchers to work together so calls and dispatching occur in parallel.</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Questions & Answers</h2>
+                    <button id="addFaqBtn" style="display: none;" class="cta-button" onclick="openFaqModal()">
+                        <i class="fas fa-plus"></i> Add FAQ
+                    </button>
                 </div>
 
-                <div class="faq-item">
-                    <h3>How do I become a 9-1-1 Telecommunicator?</h3>
-                    <p>WSCDC posts available positions on this website. The hiring process may include application, orientation, basic skills test, typing test, interview, background checks, psychological testing, and medical examination. A high school diploma is required; a college degree is preferred. Typing speed of 35 WPM is usually required.</p>
+                <div id="faqContainer">
+                    <div style="text-align: center; padding: 2rem; color: var(--navy);">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i>
+                        <p>Loading FAQs...</p>
+                    </div>
                 </div>
-
-                <div class="faq-item">
-                    <h3>When I dial 9-1-1 why doesn’t my call get answered by my police department?</h3>
-                    <p>The communities served by WSCDC have consolidated dispatching. Telecommunicators at WSCDC answer your 9-1-1 call and dispatch the necessary resources for police, fire, or EMS. Consolidation brings financial and operational efficiencies and allows coordinated response across participating communities.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Why does the Telecommunicator always ask me if I want to speak to the officer?</h3>
-                    <p>Some citizens want to sign a complaint and some do not. The officer will still respond to investigate, but the Telecommunicator asks whether you wish to speak to the officer after the investigation is complete. If you do not want to speak with the officer, say so and the Telecommunicator will inform the officer.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Why does the Telecommunicator ask me for my address? Isn’t it right there on the screen?</h3>
-                    <p>When receiving a land-line 9-1-1 call, Telecommunicators receive the caller's address and phone number. For cell phone calls, they receive lat/long coordinates that translate to an address. It is national standard to ask and then verify the location — if responders are sent to the wrong place, they cannot help. Verifying the address is critical.</p>
-                </div>
-
-                <p class="more">For additional FAQs and details, please visit the original WSCDC FAQ page.</p>
             </div>
         </section>
 
@@ -90,7 +100,7 @@
 
             <div class="info-box">
                 <h2>Governance</h2>
-                <p>WSCDC is compliant with Part 725 of Title 83 of the Illinois Administrative Code and is authorized to operate a 9-1-1 Emergency Telephone Number System and promote the awareness of the system to all potential users. <a href="https://www.wscdc.org/node/26">Read more</a></p>
+                <p>WSCDC is compliant with Part 725 of Title 83 of the Illinois Administrative Code and is authorized to operate a 9-1-1 Emergency Telephone Number System and promote the awareness of the system to all potential users.</p>
             </div>
         </section>
     </main>
@@ -101,7 +111,6 @@
                 <h3>Contact Us</h3>
                 <p>Emergency: 911</p>
                 <p>Non-Emergency: (708) 771-9110</p>
-                
             </div>
             <div class="footer-section">
                 <h3>Location</h3>
@@ -119,6 +128,25 @@
             <p>&copy; 2025 West Suburban Consolidated Dispatch Center. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- FAQ Modal -->
+    <div id="faqModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeFaqModal()">&times;</span>
+            <h2 id="faqModalTitle">Add FAQ</h2>
+            <form id="faqForm" class="modal-form">
+                <div class="form-group">
+                    <label for="faq-question">Question *</label>
+                    <input type="text" id="faq-question" required>
+                </div>
+                <div class="form-group">
+                    <label for="faq-answer">Answer *</label>
+                    <textarea id="faq-answer" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Save FAQ</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Sign In Modal -->
     <div id="signinModal" class="modal">
@@ -188,5 +216,134 @@
     </script>
 
     <script src="app.js"></script>
+
+    <script>
+        let isAdmin = false;
+        let editingFaqId = null;
+
+        // Check if user is admin
+        window.auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const userDoc = await window.db.collection('users').doc(user.uid).get();
+                if (userDoc.exists && userDoc.data().role === 'admin') {
+                    isAdmin = true;
+                    document.getElementById('addFaqBtn').style.display = 'block';
+                }
+            }
+            loadFAQs();
+        });
+
+        // Load FAQs from Firestore
+        async function loadFAQs() {
+            try {
+                const snapshot = await window.db.collection('faqs').orderBy('createdAt', 'desc').get();
+                const container = document.getElementById('faqContainer');
+                
+                if (snapshot.empty) {
+                    container.innerHTML = '<p style="text-align: center; color: #666;">No FAQs available yet.</p>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const faq = doc.data();
+                    const faqElement = document.createElement('div');
+                    faqElement.className = 'faq-item';
+                    faqElement.innerHTML = `
+                        <h3>
+                            ${faq.question}
+                            ${isAdmin ? `
+                                <span class="admin-controls">
+                                    <button class="edit-btn" onclick="editFaq('${doc.id}', '${faq.question.replace(/'/g, "\\'")}', '${faq.answer.replace(/'/g, "\\'")}')">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="delete-btn" onclick="deleteFaq('${doc.id}')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </span>
+                            ` : ''}
+                        </h3>
+                        <p>${faq.answer}</p>
+                    `;
+                    container.appendChild(faqElement);
+                });
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                document.getElementById('faqContainer').innerHTML = 
+                    '<p style="color: red;">Error loading FAQs. Please try again later.</p>';
+            }
+        }
+
+        // Open FAQ modal
+        function openFaqModal() {
+            document.getElementById('faqModal').style.display = 'block';
+            document.getElementById('faqModalTitle').textContent = 'Add FAQ';
+            document.getElementById('faqForm').reset();
+            editingFaqId = null;
+        }
+
+        // Close FAQ modal
+        function closeFaqModal() {
+            document.getElementById('faqModal').style.display = 'none';
+            editingFaqId = null;
+        }
+
+        // Edit FAQ
+        function editFaq(id, question, answer) {
+            editingFaqId = id;
+            document.getElementById('faqModalTitle').textContent = 'Edit FAQ';
+            document.getElementById('faq-question').value = question;
+            document.getElementById('faq-answer').value = answer;
+            document.getElementById('faqModal').style.display = 'block';
+        }
+
+        // Delete FAQ
+        async function deleteFaq(id) {
+            if (!confirm('Are you sure you want to delete this FAQ?')) return;
+            
+            try {
+                await window.db.collection('faqs').doc(id).delete();
+                alert('FAQ deleted successfully!');
+                loadFAQs();
+            } catch (error) {
+                console.error('Error deleting FAQ:', error);
+                alert('Error deleting FAQ: ' + error.message);
+            }
+        }
+
+        // Handle FAQ form submission
+        document.getElementById('faqForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const question = document.getElementById('faq-question').value;
+            const answer = document.getElementById('faq-answer').value;
+
+            try {
+                if (editingFaqId) {
+                    // Update existing FAQ
+                    await window.db.collection('faqs').doc(editingFaqId).update({
+                        question: question,
+                        answer: answer,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    alert('FAQ updated successfully!');
+                } else {
+                    // Add new FAQ
+                    await window.db.collection('faqs').add({
+                        question: question,
+                        answer: answer,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    alert('FAQ added successfully!');
+                }
+                
+                closeFaqModal();
+                loadFAQs();
+            } catch (error) {
+                console.error('Error saving FAQ:', error);
+                alert('Error saving FAQ: ' + error.message);
+            }
+        });
+    </script>
 </body>
 </html>
