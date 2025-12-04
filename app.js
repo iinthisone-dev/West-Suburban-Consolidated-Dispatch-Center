@@ -71,17 +71,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
+            const phone = document.getElementById('signup-phone').value;
             const password = document.getElementById('signup-password').value;
 
             window.auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log("User signed up:", user);
+                    
+                    // Save additional user data to Firestore
+                    return window.db.collection('users').doc(user.uid).set({
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        role: 'user',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                })
+                .then(() => {
+                    console.log("User signed up and data saved");
                     alert("Account created successfully!");
                     closeModal('signupModal');
                     signupForm.reset();
-                    updateUIForUser(user);
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -122,7 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
     window.auth.onAuthStateChanged((user) => {
         if (user) {
             console.log("User is signed in:", user.email);
-            updateUIForUser(user);
+            // Load user data from Firestore
+            window.db.collection('users').doc(user.uid).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        updateUIForUser(user, userData);
+                    } else {
+                        updateUIForUser(user);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error loading user data:", error);
+                    updateUIForUser(user);
+                });
         } else {
             console.log("User is signed out");
             updateUIForGuest();
@@ -162,11 +187,12 @@ window.onclick = function(event) {
 // 4. UI UPDATE FUNCTIONS
 // ========================================
 
-function updateUIForUser(user) {
+function updateUIForUser(user, userData) {
     const navAuth = document.querySelector('.nav-auth');
     if (navAuth) {
+        const displayName = userData && userData.name ? userData.name : user.email;
         navAuth.innerHTML = `
-            <span style="color: white; margin-right: 1rem; display: flex; align-items: center;">👤 ${user.email}</span>
+            <span style="color: white; margin-right: 1rem; display: flex; align-items: center;">👤 ${displayName}</span>
             <button onclick="logout()" class="auth-btn signin-btn">Sign Out</button>
         `;
     }

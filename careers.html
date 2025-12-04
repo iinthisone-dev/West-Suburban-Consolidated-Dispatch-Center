@@ -311,12 +311,20 @@
             <h2>Create Account</h2>
             <form id="signupForm" class="modal-form">
                 <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
                     <label for="signup-email">Email</label>
                     <input type="email" id="signup-email" required>
                 </div>
                 <div class="form-group">
+                    <label for="signup-phone">Phone Number</label>
+                    <input type="tel" id="signup-phone" required>
+                </div>
+                <div class="form-group">
                     <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" required>
+                    <input type="password" id="signup-password" required minlength="6">
                 </div>
                 <button type="submit" class="submit-btn">Sign Up</button>
             </form>
@@ -326,6 +334,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     
     <!-- Initialize Firebase -->
     <script>
@@ -340,6 +349,7 @@
         };
         firebase.initializeApp(firebaseConfig);
         window.auth = firebase.auth();
+        window.db = firebase.firestore();
     </script>
 
     <script src="app.js"></script>
