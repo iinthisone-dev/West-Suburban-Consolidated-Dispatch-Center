@@ -226,7 +226,75 @@
         </div>
     </footer>
 
-    <script src="app.js"></script>
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signinModal')">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signinForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signin-email">Email</label>
+                    <input type="email" id="signin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Create Account</h2>
+            <form id="signupForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-phone">Phone Number</label>
+                    <input type="tel" id="signup-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required minlength="6">
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+    
+    <!-- Initialize Firebase -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzXZtNX_EsLxaNWQPc8o7rDoUg1Dpz5m4",
+            authDomain: "wscdc-66d0e.firebaseapp.com",
+            projectId: "wscdc-66d0e",
+            storageBucket: "wscdc-66d0e.firebasestorage.app",
+            messagingSenderId: "701584946154",
+            appId: "1:701584946154:web:b11a9f7fe9009e2813f893",
+            measurementId: "G-1CSTJ0PH10"
+        };
+        firebase.initializeApp(firebaseConfig);
+        window.auth = firebase.auth();
+        window.db = firebase.firestore();
+        window.storage = firebase.storage();
+    </script>
+
     <script>
         // Modal functions
         function openApplicationModal() {
@@ -264,20 +332,12 @@
             }
         }
 
-        // Handle form submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const applicationForm = document.getElementById('applicationForm');
-            if (!applicationForm) return;
-
+        // Handle form submission - runs after Firebase is loaded
+        const applicationForm = document.getElementById('applicationForm');
+        if (applicationForm) {
             applicationForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // Check if Firebase is loaded
-                if (!window.storage || !window.db) {
-                    alert('Firebase is not loaded yet. Please wait a moment and try again.');
-                    return;
-                }
-
                 const submitBtn = e.target.querySelector('button[type="submit"]');
                 const originalBtnText = submitBtn.innerHTML;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
@@ -359,76 +419,7 @@
                     submitBtn.disabled = false;
                 }
             });
-        });
-    </script>
-
-    <!-- Sign In Modal -->
-    <div id="signinModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('signinModal')">&times;</span>
-            <h2>Sign In</h2>
-            <form id="signinForm" class="modal-form">
-                <div class="form-group">
-                    <label for="signin-email">Email</label>
-                    <input type="email" id="signin-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="signin-password">Password</label>
-                    <input type="password" id="signin-password" required>
-                </div>
-                <button type="submit" class="submit-btn">Sign In</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Sign Up Modal -->
-    <div id="signupModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
-            <h2>Create Account</h2>
-            <form id="signupForm" class="modal-form">
-                <div class="form-group">
-                    <label for="signup-name">Full Name</label>
-                    <input type="text" id="signup-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-phone">Phone Number</label>
-                    <input type="tel" id="signup-phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" required minlength="6">
-                </div>
-                <button type="submit" class="submit-btn">Sign Up</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-    
-    <!-- Initialize Firebase -->
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDzXZtNX_EsLxaNWQPc8o7rDoUg1Dpz5m4",
-            authDomain: "wscdc-66d0e.firebaseapp.com",
-            projectId: "wscdc-66d0e",
-            storageBucket: "wscdc-66d0e.firebasestorage.app",
-            messagingSenderId: "701584946154",
-            appId: "1:701584946154:web:b11a9f7fe9009e2813f893",
-            measurementId: "G-1CSTJ0PH10"
-        };
-        firebase.initializeApp(firebaseConfig);
-        window.auth = firebase.auth();
-        window.db = firebase.firestore();
-        window.storage = firebase.storage();
+        }
     </script>
 
     <script src="app.js"></script>
