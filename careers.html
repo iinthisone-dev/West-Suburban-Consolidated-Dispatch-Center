@@ -119,24 +119,14 @@
 
                         <div class="form-group">
                             <label for="resume">Upload Resume *</label>
-                            <div class="file-upload-wrapper">
-                                <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required onchange="updateFileName('resume')">
-                                <label for="resume" class="file-upload-label">
-                                    <i class="fas fa-upload"></i> Choose File
-                                </label>
-                                <span id="resume-filename" class="file-name">No file chosen</span>
-                            </div>
+                            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required onchange="updateFileName('resume')" style="display: block; width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                            <span id="resume-filename" class="file-name" style="display: block; margin-top: 5px; color: #999; font-size: 14px;">No file chosen</span>
                         </div>
 
                         <div class="form-group">
                             <label for="coverLetter">Upload Cover Letter (Optional)</label>
-                            <div class="file-upload-wrapper">
-                                <input type="file" id="coverLetter" name="coverLetter" accept=".pdf,.doc,.docx" onchange="updateFileName('coverLetter')">
-                                <label for="coverLetter" class="file-upload-label">
-                                    <i class="fas fa-upload"></i> Choose File
-                                </label>
-                                <span id="coverLetter-filename" class="file-name">No file chosen</span>
-                            </div>
+                            <input type="file" id="coverLetter" name="coverLetter" accept=".pdf,.doc,.docx" onchange="updateFileName('coverLetter')" style="display: block; width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                            <span id="coverLetter-filename" class="file-name" style="display: block; margin-top: 5px; color: #999; font-size: 14px;">No file chosen</span>
                         </div>
 
                         <div class="form-group">
@@ -275,13 +265,100 @@
         }
 
         // Handle form submission
-        document.getElementById('applicationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Here you would normally send the form data to a server
-            // For now, we'll just show a success message
-            alert('Thank you for your application! We will review your submission and contact you soon.');
-            closeApplicationModal();
+        document.addEventListener('DOMContentLoaded', function() {
+            const applicationForm = document.getElementById('applicationForm');
+            if (!applicationForm) return;
+
+            applicationForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Check if Firebase is loaded
+                if (!window.storage || !window.db) {
+                    alert('Firebase is not loaded yet. Please wait a moment and try again.');
+                    return;
+                }
+
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+                submitBtn.disabled = true;
+
+                try {
+                    // Get form data
+                    const fullName = document.getElementById('fullName').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    const address = document.getElementById('address').value;
+                    const city = document.getElementById('city').value;
+                    const state = document.getElementById('state').value;
+                    const zip = document.getElementById('zip').value;
+                    const message = document.getElementById('message').value;
+                    
+                    const resumeFile = document.getElementById('resume').files[0];
+                    const coverLetterFile = document.getElementById('coverLetter').files[0];
+
+                    if (!resumeFile) {
+                        alert('Please upload your resume.');
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                        return;
+                    }
+
+                    // Upload files to Firebase Storage
+                    const timestamp = Date.now();
+                    let resumeURL = null;
+                    let coverLetterURL = null;
+
+                    console.log('Uploading resume...');
+                    const resumeRef = window.storage.ref(`applications/${timestamp}_${resumeFile.name}`);
+                    await resumeRef.put(resumeFile);
+                    resumeURL = await resumeRef.getDownloadURL();
+                    console.log('Resume uploaded:', resumeURL);
+
+                    if (coverLetterFile) {
+                        console.log('Uploading cover letter...');
+                        const coverLetterRef = window.storage.ref(`applications/${timestamp}_${coverLetterFile.name}`);
+                        await coverLetterRef.put(coverLetterFile);
+                        coverLetterURL = await coverLetterRef.getDownloadURL();
+                        console.log('Cover letter uploaded:', coverLetterURL);
+                    }
+
+                    // Save application data to Firestore
+                    console.log('Saving to Firestore...');
+                    await window.db.collection('job_applications').add({
+                        fullName: fullName,
+                        email: email,
+                        phone: phone,
+                        address: address,
+                        city: city,
+                        state: state,
+                        zip: zip,
+                        message: message,
+                        resumeURL: resumeURL,
+                        coverLetterURL: coverLetterURL,
+                        submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        status: 'pending'
+                    });
+
+                    console.log('Application saved successfully!');
+                    
+                    // Close modal first
+                    closeApplicationModal();
+                    
+                    // Reset form
+                    applicationForm.reset();
+                    
+                    // Show success message
+                    alert('✓ Application Submitted Successfully!\n\nThank you for your application! We have received your resume and will review your submission. We will contact you soon.');
+                    
+                } catch (error) {
+                    console.error('Error submitting application:', error);
+                    alert('Error submitting application: ' + error.message);
+                } finally {
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                }
+            });
         });
     </script>
 
@@ -335,6 +412,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
     
     <!-- Initialize Firebase -->
     <script>
@@ -350,6 +428,7 @@
         firebase.initializeApp(firebaseConfig);
         window.auth = firebase.auth();
         window.db = firebase.firestore();
+        window.storage = firebase.storage();
     </script>
 
     <script src="app.js"></script>
