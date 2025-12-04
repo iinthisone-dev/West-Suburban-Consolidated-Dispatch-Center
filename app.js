@@ -192,7 +192,9 @@ function updateUIForUser(user, userData) {
     if (navAuth) {
         const displayName = userData && userData.name ? userData.name : user.email;
         navAuth.innerHTML = `
-            <span style="color: white; margin-right: 1rem; display: flex; align-items: center;">👤 ${displayName}</span>
+            <a href="profile.html" style="color: white; margin-right: 1rem; display: flex; align-items: center; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#ff6b35'" onmouseout="this.style.color='white'">
+                <i class="fas fa-user-circle" style="margin-right: 0.5rem;"></i> ${displayName}
+            </a>
             <button onclick="logout()" class="auth-btn signin-btn">Sign Out</button>
         `;
     }

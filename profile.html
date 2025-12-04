@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - West Suburban Consolidated Dispatch Center</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--navy);
+        }
+        .profile-icon {
+            font-size: 80px;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+        }
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-group input:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1a2844;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--navy);
+        }
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-brand">
+            <img src="photos/wscdc_logo.png" alt="WSDC Logo" class="nav-logo">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="careers.html">Careers</a>
+            <a href="FOIA.html">FOIA</a>
+            <a href="FAQ.html">FAQ</a>
+            <a href="links.html">Links</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="nav-auth">
+            <button onclick="openModal('signinModal')" class="auth-btn signin-btn">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+            <button onclick="openModal('signupModal')" class="auth-btn signup-btn">
+                <i class="fas fa-user-plus"></i> Sign Up
+            </button>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>My Profile</h1>
+            <p>View and edit your account information</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <div id="loadingMessage" class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading profile...
+            </div>
+
+            <div id="profileContent" style="display: none;">
+                <div class="profile-header">
+                    <div class="profile-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h2 id="profileName">User Profile</h2>
+                </div>
+
+                <div id="messageContainer"></div>
+
+                <form id="profileForm" class="profile-form">
+                    <div class="form-group">
+                        <label for="profile-name">Full Name</label>
+                        <input type="text" id="profile-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile-email">Email</label>
+                        <input type="email" id="profile-email" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile-phone">Phone Number</label>
+                        <input type="tel" id="profile-phone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profile-role">Role</label>
+                        <input type="text" id="profile-role" disabled>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">
+                            <i class="fas fa-arrow-left"></i> Back to Home
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Emergency: 911</p>
+                <p>Non-Emergency: 708-771-9110</p>
+            </div>
+            <div class="footer-section">
+                <h3>Location</h3>
+                <p>400 Park Avenue</p>
+                <p>River Forest, IL 60305</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="careers.html">Careers</a>
+                <a href="meetings.html">Meetings</a>
+                <a href="FAQ.html">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 West Suburban Consolidated Dispatch Center. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div id="signinModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signinModal')">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signinForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signin-email">Email</label>
+                    <input type="email" id="signin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signin-password">Password</label>
+                    <input type="password" id="signin-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Create Account</h2>
+            <form id="signupForm" class="modal-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-phone">Phone Number</label>
+                    <input type="tel" id="signup-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required minlength="6">
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Initialize Firebase -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzXZtNX_EsLxaNWQPc8o7rDoUg1Dpz5m4",
+            authDomain: "wscdc-66d0e.firebaseapp.com",
+            projectId: "wscdc-66d0e",
+            storageBucket: "wscdc-66d0e.firebasestorage.app",
+            messagingSenderId: "701584946154",
+            appId: "1:701584946154:web:b11a9f7fe9009e2813f893",
+            measurementId: "G-1CSTJ0PH10"
+        };
+        firebase.initializeApp(firebaseConfig);
+        window.auth = firebase.auth();
+        window.db = firebase.firestore();
+    </script>
+
+    <script src="app.js"></script>
+
+    <script>
+        let currentUser = null;
+
+        // Check if user is logged in
+        window.auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                await loadUserProfile(user.uid);
+            } else {
+                // Redirect to home if not logged in
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Load user profile from Firestore
+        async function loadUserProfile(uid) {
+            try {
+                const doc = await window.db.collection('users').doc(uid).get();
+                
+                if (doc.exists) {
+                    const userData = doc.data();
+                    
+                    // Populate form fields
+                    document.getElementById('profile-name').value = userData.name || '';
+                    document.getElementById('profile-email').value = userData.email || currentUser.email;
+                    document.getElementById('profile-phone').value = userData.phone || '';
+                    document.getElementById('profile-role').value = userData.role || 'user';
+                    document.getElementById('profileName').textContent = userData.name || 'User Profile';
+                } else {
+                    // Create initial profile if it doesn't exist
+                    await window.db.collection('users').doc(uid).set({
+                        email: currentUser.email,
+                        name: currentUser.displayName || '',
+                        phone: '',
+                        role: 'user',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Set default values
+                    document.getElementById('profile-name').value = '';
+                    document.getElementById('profile-email').value = currentUser.email;
+                    document.getElementById('profile-phone').value = '';
+                    document.getElementById('profile-role').value = 'user';
+                    document.getElementById('profileName').textContent = 'User Profile';
+                }
+                
+                // Show profile content
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('profileContent').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                document.getElementById('loadingMessage').innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i> Error loading profile: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Handle profile form submission
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            submitBtn.disabled = true;
+
+            try {
+                const name = document.getElementById('profile-name').value;
+                const phone = document.getElementById('profile-phone').value;
+
+                // Update Firestore
+                await window.db.collection('users').doc(currentUser.uid).update({
+                    name: name,
+                    phone: phone,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                showSuccess('Profile updated successfully!');
+                document.getElementById('profileName').textContent = name;
+                
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showError('Error updating profile: ' + error.message);
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showError(message) {
+            const container = document.getElementById('messageContainer');
+            container.innerHTML = `<div class="error-message"><i class="fas fa-exclamation-circle"></i> ${message}</div>`;
+            setTimeout(() => container.innerHTML = '', 5000);
+        }
+
+        function showSuccess(message) {
+            const container = document.getElementById('messageContainer');
+            container.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> ${message}</div>`;
+            setTimeout(() => container.innerHTML = '', 5000);
+        }
+    </script>
+</body>
+</html>
